@@ -46,3 +46,22 @@ ggplot(df_signed, aes(date = date, value = value)) +
 ```
 
 [See more examples](https://y-sunflower.github.io/ggcalheat/)
+
+## Interactive with ggiraph
+
+``` r
+library(ggplot2)
+library(ggcalheat)
+library(ggiraph)
+
+gg <- ggplot(df, aes(date = date, value = value)) +
+  geom_calendar_interactive(
+    aes(
+      tooltip = paste("Date:", date, "\nValue:", value),
+      data_id = as.character(date)
+    )
+  ) +
+  scale_fill_gradient(low = "grey95", high = "#2C7FB8")
+
+girafe(ggobj = gg)
+```

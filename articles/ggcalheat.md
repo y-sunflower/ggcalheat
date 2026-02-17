@@ -54,7 +54,7 @@ nrow(traffic)
 #> [1] 1461
 ```
 
-## 3 1) Basic usage on large daily series
+## 3 Basic usage on large daily series
 
 ``` r
 ggplot(traffic, aes(date = date, value = value)) +
@@ -67,7 +67,7 @@ ggplot(traffic, aes(date = date, value = value)) +
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-3-1.png)
 
-## 4 2) Signed data with a diverging scale
+## 4 Signed data with a diverging scale
 
 When values include both negative and positive values, use a diverging
 fill scale with `midpoint = 0`.
@@ -98,7 +98,7 @@ ggplot(anomaly, aes(date = date, value = value)) +
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-4-1.png)
 
-## 5 3) Change week start to Monday
+## 5 Change week start to Monday
 
 By default,
 [`geom_calendar()`](https://y-sunflower.github.io/ggcalheat/reference/geom_calendar.md)
@@ -119,7 +119,7 @@ ggplot(q1_2025, aes(date = date, value = value)) +
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-5-1.png)
 
-## 6 4) Sparse input + explicit date window
+## 6 Sparse input + explicit date window
 
 [`geom_calendar()`](https://y-sunflower.github.io/ggcalheat/reference/geom_calendar.md)
 can fill missing dates in a larger display range using `na_value`.
@@ -146,7 +146,7 @@ ggplot(sparse, aes(date = date, value = value)) +
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-6-1.png)
 
-## 7 5) Duplicate dates are summed automatically
+## 7 Duplicate dates are summed automatically
 
 If your source has multiple rows per day,
 [`geom_calendar()`](https://y-sunflower.github.io/ggcalheat/reference/geom_calendar.md)
@@ -171,7 +171,7 @@ ggplot(events, aes(date = date, value = value)) +
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-7-1.png)
 
-## 8 6) Style tile size and borders
+## 8 Style tile size and borders
 
 You can control tile geometry and borders for a denser or lighter visual
 style.
@@ -193,7 +193,7 @@ ggplot(yr2024, aes(date = date, value = value)) +
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-8-1.png)
 
-## 9 7) Facet by group
+## 9 Facet by group
 
 Calendar heatmaps can be faceted like regular `ggplot2` layers.
 
@@ -222,10 +222,39 @@ ggplot(team_data, aes(date = date, value = value)) +
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-9-1.png)
 
-## 10 Notes
+## 10 Interactive calendar heatmaps with ggiraph
+
+[`geom_calendar_interactive()`](https://y-sunflower.github.io/ggcalheat/reference/geom_calendar_interactive.md)
+uses ggiraph so tiles can expose tooltips and IDs.
+
+``` r
+library(ggiraph)
+
+interactive_df <- traffic[traffic$year == "2025", ]
+
+p_interactive <- ggplot(interactive_df, aes(date = date, value = value)) +
+  geom_calendar_interactive(
+    aes(
+      tooltip = paste0("Date: ", date, "\nValue: ", value),
+      data_id = as.character(date)
+    ),
+    color = "white",
+    linewidth = 0.2
+  ) +
+  scale_fill_gradient(low = "grey95", high = "#2C7FB8", name = "Traffic") +
+  labs(title = "Interactive 2025 calendar") +
+  calendar_theme
+
+girafe(ggobj = p_interactive)
+```
+
+## 11 Notes
 
 - Required aesthetics are `date` and `value`.
 - Continuous and diverging color behavior is controlled with standard
   `ggplot2` scales.
+- Use
+  [`geom_calendar_interactive()`](https://y-sunflower.github.io/ggcalheat/reference/geom_calendar_interactive.md)
+  for ggiraph tooltips and clickable tiles.
 - For production reports, consider fixed date windows (`start_date`,
   `end_date`) so plots are directly comparable.
