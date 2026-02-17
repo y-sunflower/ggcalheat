@@ -4,11 +4,15 @@
 map `date` and `value`, then call
 [`geom_calendar()`](https://y-sunflower.github.io/ggcalheat/reference/geom_calendar.md).
 
+  
+
 ## Installation
 
 ``` r
 remotes::install_github("y-sunflower/ggcalheat")
 ```
+
+  
 
 ## Quick start
 
@@ -16,9 +20,8 @@ remotes::install_github("y-sunflower/ggcalheat")
 library(ggplot2)
 library(ggcalheat)
 
-set.seed(1)
 df <- data.frame(
-  date = seq.Date(as.Date("2025-01-01"), as.Date("2025-03-31"), by = "day"),
+  date = seq.Date(as.Date("2025-01-01"), as.Date("2025-12-31"), by = "day"),
   value = rpois(90, lambda = 3)
 )
 
@@ -45,7 +48,7 @@ ggplot(df_signed, aes(date = date, value = value)) +
   )
 ```
 
-[See more examples](https://y-sunflower.github.io/ggcalheat/)
+  
 
 ## Interactive with ggiraph
 
@@ -55,13 +58,13 @@ library(ggcalheat)
 library(ggiraph)
 
 gg <- ggplot(df, aes(date = date, value = value)) +
-  geom_calendar_interactive(
-    aes(
-      tooltip = paste("Date:", date, "\nValue:", value),
-      data_id = as.character(date)
-    )
-  ) +
+  geom_calendar_interactive(aes(
+    tooltip = paste("Date:", date, "\nValue:", value),
+    data_id = as.character(date)
+  )) +
   scale_fill_gradient(low = "grey95", high = "#2C7FB8")
 
 girafe(ggobj = gg)
 ```
+
+[See more examples](https://y-sunflower.github.io/ggcalheat/)
