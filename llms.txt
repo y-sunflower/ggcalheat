@@ -6,14 +6,6 @@ map `date` and `value`, then call
 
 ## Installation
 
-CRAN installation (when available):
-
-``` r
-install.packages("ggcalheat")
-```
-
-Install the development version from GitHub:
-
 ``` r
 remotes::install_github("y-sunflower/ggcalheat")
 ```
@@ -53,9 +45,7 @@ ggplot(df_signed, aes(date = date, value = value)) +
   )
 ```
 
-## Documentation
-
-Full reference documentation: <https://y-sunflower.github.io/ggcalheat/>
+[See more examples](https://y-sunflower.github.io/ggcalheat/)
 
 # Package index
 
@@ -64,3 +54,9 @@ Full reference documentation: <https://y-sunflower.github.io/ggcalheat/>
 - [`geom_calendar()`](https://y-sunflower.github.io/ggcalheat/reference/geom_calendar.md)
   : Calendar heatmap geometry
 
+# Articles
+
+### All vignettes
+
+- [ggcalheat: calendar heatmaps with
+  ggplot2](https://y-sunflower.github.io/ggcalheat/articles/ggcalheat.md):
