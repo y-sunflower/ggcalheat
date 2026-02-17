@@ -1,0 +1,16 @@
+url: https://y-sunflower.github.io/ggcalheat/
+home:
+  title: Calendar heatmaps in R
+
+authors:
+  Joseph Barbier:
+    href: https://barbierjoseph.com/
+
+template:
+  bootstrap: 5
+  bootswatch: journal
+  github: https://github.com/y-sunflower/ggcalheat
+  light-switch: true
+
+pkgdown:
+  as_is: yes
