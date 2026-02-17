@@ -1,17 +1,8 @@
 # ggcalheat
 
-`ggcalheat` provides calendar heatmaps for `ggplot2` with a simple API: map
-`date` and `value`, then call `geom_calendar()`.
+`ggcalheat` provides calendar heatmaps for `ggplot2` with a simple API: map `date` and `value`, then call `geom_calendar()`.
 
 ## Installation
-
-CRAN installation (when available):
-
-```r
-install.packages("ggcalheat")
-```
-
-Install the development version from GitHub:
 
 ```r
 remotes::install_github("y-sunflower/ggcalheat")
@@ -52,6 +43,4 @@ ggplot(df_signed, aes(date = date, value = value)) +
   )
 ```
 
-## Documentation
-
-Full reference documentation: <https://y-sunflower.github.io/ggcalheat/>
+[See more examples](https://y-sunflower.github.io/ggcalheat/)
