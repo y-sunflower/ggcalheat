@@ -69,7 +69,7 @@ traffic$year <- format(traffic$date, "%Y")
 nrow(traffic)
 ```
 
-## 1) Basic usage on large daily series
+## Basic usage on large daily series
 
 ```{r}
 ggplot(traffic, aes(date = date, value = value)) +
@@ -80,7 +80,7 @@ ggplot(traffic, aes(date = date, value = value)) +
   calendar_theme
 ```
 
-## 2) Signed data with a diverging scale
+## Signed data with a diverging scale
 
 When values include both negative and positive values, use a diverging fill
 scale with `midpoint = 0`.
@@ -109,7 +109,7 @@ ggplot(anomaly, aes(date = date, value = value)) +
   calendar_theme
 ```
 
-## 3) Change week start to Monday
+## Change week start to Monday
 
 By default, `geom_calendar()` uses Sunday as the first day of week. You can
 switch to Monday.
@@ -127,7 +127,7 @@ ggplot(q1_2025, aes(date = date, value = value)) +
   calendar_theme
 ```
 
-## 4) Sparse input + explicit date window
+## Sparse input + explicit date window
 
 `geom_calendar()` can fill missing dates in a larger display range using
 `na_value`.
@@ -152,7 +152,7 @@ ggplot(sparse, aes(date = date, value = value)) +
   calendar_theme
 ```
 
-## 5) Duplicate dates are summed automatically
+## Duplicate dates are summed automatically
 
 If your source has multiple rows per day, `geom_calendar()` aggregates by day
 with `sum(value)`.
@@ -174,7 +174,7 @@ ggplot(events, aes(date = date, value = value)) +
   calendar_theme
 ```
 
-## 6) Style tile size and borders
+## Style tile size and borders
 
 You can control tile geometry and borders for a denser or lighter visual style.
 
@@ -193,7 +193,7 @@ ggplot(yr2024, aes(date = date, value = value)) +
   calendar_theme
 ```
 
-## 7) Facet by group
+## Facet by group
 
 Calendar heatmaps can be faceted like regular `ggplot2` layers.
 
@@ -220,10 +220,34 @@ ggplot(team_data, aes(date = date, value = value)) +
   calendar_theme
 ```
 
+## Interactive calendar heatmaps with ggiraph
+
+`geom_calendar_interactive()` uses ggiraph so tiles can expose tooltips and IDs.
+
+```{r}
+library(ggiraph)
+
+interactive_df <- traffic[traffic$year == "2025", ]
+
+p_interactive <- ggplot(interactive_df, aes(date = date, value = value)) +
+  geom_calendar_interactive(
+    aes(
+      tooltip = paste0("Date: ", date, "\nValue: ", value),
+      data_id = as.character(date)
+    ),
+    color = "white",
+    linewidth = 0.2
+  ) +
+  scale_fill_gradient(low = "grey95", high = "#2C7FB8", name = "Traffic") +
+  labs(title = "Interactive 2025 calendar") +
+  calendar_theme
+
+girafe(ggobj = p_interactive)
+```
+
 ## Notes
 
 - Required aesthetics are `date` and `value`.
-- Continuous and diverging color behavior is controlled with standard
-  `ggplot2` scales.
-- For production reports, consider fixed date windows (`start_date`, `end_date`)
-  so plots are directly comparable.
+- Continuous and diverging color behavior is controlled with standard `ggplot2` scales.
+- Use `geom_calendar_interactive()` for ggiraph tooltips and clickable tiles.
+- For production reports, consider fixed date windows (`start_date`, `end_date`) so plots are directly comparable.

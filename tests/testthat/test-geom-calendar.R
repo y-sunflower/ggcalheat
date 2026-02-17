@@ -125,3 +125,29 @@ test_that("geom_calendar returns a working ggplot layer", {
   built <- ggplot2::ggplot_build(plot)
   expect_equal(nrow(built$data[[1]]), 3)
 })
+
+test_that("geom_calendar_interactive works with ggiraph", {
+  skip_if_not_installed("ggplot2")
+  skip_if_not_installed("ggiraph")
+
+  df <- data.frame(
+    date = as.Date(c("2025-01-01", "2025-01-03")),
+    value = c(1, 3),
+    label = c("first", "second")
+  )
+
+  plot <- ggplot2::ggplot(df, ggplot2::aes(date = date, value = value)) +
+    geom_calendar_interactive(
+      ggplot2::aes(
+        tooltip = paste("Date:", date, "| Label:", label),
+        data_id = as.character(date)
+      )
+    )
+
+  expect_s3_class(plot$layers[[1]], "LayerInstance")
+  expect_no_error(ggplot2::ggplot_build(plot))
+
+  built <- ggplot2::ggplot_build(plot)
+  expect_equal(nrow(built$data[[1]]), 3)
+  expect_true(any(!is.na(built$data[[1]]$tooltip)))
+})

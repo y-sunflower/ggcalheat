@@ -16,6 +16,7 @@ Imports:
     ggplot2,
     rlang
 Suggests: 
+    ggiraph,
     quarto,
     knitr,
     testthat (>= 3.0.0)

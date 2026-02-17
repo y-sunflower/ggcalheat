@@ -1,3 +1,59 @@
+first_non_missing <- function(x) {
+  idx <- which(!is.na(x))
+  if (length(idx) == 0) {
+    return(NA)
+  }
+  x[[idx[[1]]]]
+}
+
+compute_calendar_panel_data <- function(
+  data,
+  week_start = "sunday",
+  start_date = NULL,
+  end_date = NULL,
+  na_value = 0
+) {
+  calendar_data <- compute_calendar_layout(
+    dates = data$date,
+    values = data$value,
+    week_start = week_start,
+    start_date = start_date,
+    end_date = end_date,
+    na_value = na_value
+  )
+
+  excluded <- c(
+    "date",
+    "value",
+    "PANEL",
+    "group",
+    "x",
+    "y",
+    "week",
+    "weekday",
+    "month",
+    "week_start"
+  )
+  metadata_cols <- setdiff(names(data), excluded)
+  if (length(metadata_cols) == 0) {
+    return(calendar_data)
+  }
+
+  metadata <- stats::aggregate(
+    data[metadata_cols],
+    by = list(date = coerce_date_vector(data$date)),
+    FUN = first_non_missing
+  )
+
+  merge(
+    calendar_data,
+    metadata,
+    by = "date",
+    all.x = TRUE,
+    sort = TRUE
+  )
+}
+
 StatCalendar <- ggplot2::ggproto(
   "StatCalendar",
   ggplot2::Stat,
@@ -11,9 +67,35 @@ StatCalendar <- ggplot2::ggproto(
     end_date = NULL,
     na_value = 0
   ) {
-    compute_calendar_layout(
-      dates = data$date,
-      values = data$value,
+    compute_calendar_panel_data(
+      data = data,
+      week_start = week_start,
+      start_date = start_date,
+      end_date = end_date,
+      na_value = na_value
+    )
+  }
+)
+
+StatCalendarInteractive <- ggplot2::ggproto(
+  "StatCalendarInteractive",
+  ggplot2::Stat,
+  required_aes = c("date", "value"),
+  default_aes = ggplot2::aes(
+    fill = ggplot2::after_stat(value),
+    data_id = ggplot2::after_stat(as.character(date)),
+    tooltip = ggplot2::after_stat(paste0(as.character(date), ": ", value))
+  ),
+  compute_panel = function(
+    data,
+    scales,
+    week_start = "sunday",
+    start_date = NULL,
+    end_date = NULL,
+    na_value = 0
+  ) {
+    compute_calendar_panel_data(
+      data = data,
       week_start = week_start,
       start_date = start_date,
       end_date = end_date,
