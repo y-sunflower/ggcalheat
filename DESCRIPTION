@@ -1,14 +1,20 @@
 Package: ggcalheat
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Calendar Heatmaps in R
+Version: 0.2.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Joseph", "Barbier", , "joseph@ysunflower.com", role = c("aut", "cre"))
+Description: Create and customize calendar heatmaps using geoms for ggplot2.
+License: file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
+RoxygenNote: 7.3.2
+URL: https://y-sunflower.github.io/ggcalheat/
+BugReports: https://github.com/y-sunflower/ggcalheat/issues
+Depends:
+    R (>= 4.1)
 Suggests: 
+    quarto,
+    knitr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: quarto, knitr
