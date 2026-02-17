@@ -1,4 +1,4 @@
-What the package does (one paragraph).
+Create and customize calendar heatmaps using geoms for ggplot2.
 
 # 
 

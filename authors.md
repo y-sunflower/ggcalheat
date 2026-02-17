@@ -2,16 +2,20 @@
 
 ## Authors
 
-- **First Last**. Author, maintainer.
+- **[Joseph Barbier](https://barbierjoseph.com/)**. Author, maintainer.
 
 ## Citation
 
-Last F (2026). *ggcalheat: What the Package Does (One Line, Title
-Case)*. R package version 0.0.0.9000.
+Source:
+[`DESCRIPTION`](https://github.com/y-sunflower/ggcalheat/blob/main/DESCRIPTION)
+
+Barbier J (2026). *ggcalheat: Calendar Heatmaps in R*. R package version
+0.2.0, <https://y-sunflower.github.io/ggcalheat/>.
 
     @Manual{,
-      title = {ggcalheat: What the Package Does (One Line, Title Case)},
-      author = {First Last},
+      title = {ggcalheat: Calendar Heatmaps in R},
+      author = {Joseph Barbier},
       year = {2026},
-      note = {R package version 0.0.0.9000},
+      note = {R package version 0.2.0},
+      url = {https://y-sunflower.github.io/ggcalheat/},
     }
