@@ -11,7 +11,8 @@
 #' `data_id`, `onclick`, etc.) inside [ggplot2::aes()].
 #'
 #' @inheritParams geom_calendar
-#' @return A ggplot2 layer using ggiraph interactive geometry.
+#' @return A ggplot2 component using ggiraph interactive geometry. By default
+#'   this includes [ggplot2::coord_fixed()] so day tiles stay square.
 #' @export
 #'
 #' @examplesIf requireNamespace("ggiraph", quietly = TRUE)
@@ -44,12 +45,15 @@ geom_calendar_interactive <- function(
   na_value = 0,
   cell_width = 0.95,
   cell_height = 0.95,
+  square = TRUE,
   color = NA,
   linewidth = 0,
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
 ) {
+  square <- validate_square_flag(square, arg = "square")
+
   if (!requireNamespace("ggiraph", quietly = TRUE)) {
     rlang::abort(
       "Package `ggiraph` must be installed to use `geom_calendar_interactive()`."
@@ -58,7 +62,7 @@ geom_calendar_interactive <- function(
 
   geom_interactive_tile <- getFromNamespace("GeomInteractiveTile", "ggiraph")
 
-  ggplot2::layer(
+  layer <- ggplot2::layer(
     data = data,
     mapping = mapping,
     stat = StatCalendarInteractive,
@@ -79,4 +83,10 @@ geom_calendar_interactive <- function(
       ...
     )
   )
+
+  if (square) {
+    return(list(layer, ggplot2::coord_fixed(ratio = 1)))
+  }
+
+  layer
 }

@@ -14,6 +14,7 @@ geom_calendar_interactive(
   na_value = 0,
   cell_width = 0.95,
   cell_height = 0.95,
+  square = TRUE,
   color = NA,
   linewidth = 0,
   na.rm = FALSE,
@@ -42,6 +43,9 @@ include \code{date} and \code{value}.}
 
 \item{cell_height}{Height of each day tile.}
 
+\item{square}{If \code{TRUE}, adds \code{\link[ggplot2:coord_fixed]{ggplot2::coord_fixed()}} (\code{ratio = 1}) so day
+cells render as squares by default.}
+
 \item{color}{Tile border color.}
 
 \item{linewidth}{Tile border line width.}
@@ -53,7 +57,8 @@ include \code{date} and \code{value}.}
 \item{inherit.aes}{If \code{FALSE}, overrides global aesthetics.}
 }
 \value{
-A ggplot2 layer using ggiraph interactive geometry.
+A ggplot2 component using ggiraph interactive geometry. By default
+this includes \code{\link[ggplot2:coord_fixed]{ggplot2::coord_fixed()}} so day tiles stay square.
 }
 \description{
 \code{geom_calendar_interactive()} behaves like \code{\link[=geom_calendar]{geom_calendar()}} but draws tiles

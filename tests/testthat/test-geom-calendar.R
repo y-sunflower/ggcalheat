@@ -124,6 +124,23 @@ test_that("geom_calendar returns a working ggplot layer", {
 
   built <- ggplot2::ggplot_build(plot)
   expect_equal(nrow(built$data[[1]]), 3)
+  expect_false(plot$coordinates$default)
+  expect_equal(plot$coordinates$ratio, 1)
+})
+
+test_that("geom_calendar can disable square rendering", {
+  skip_if_not_installed("ggplot2")
+
+  df <- data.frame(
+    date = as.Date(c("2025-01-01", "2025-01-03")),
+    value = c(1, 3)
+  )
+
+  plot <- ggplot2::ggplot(df, ggplot2::aes(date = date, value = value)) +
+    geom_calendar(square = FALSE)
+
+  expect_true(plot$coordinates$default)
+  expect_null(plot$coordinates$ratio)
 })
 
 test_that("geom_calendar_interactive works with ggiraph", {
@@ -150,4 +167,22 @@ test_that("geom_calendar_interactive works with ggiraph", {
   built <- ggplot2::ggplot_build(plot)
   expect_equal(nrow(built$data[[1]]), 3)
   expect_true(any(!is.na(built$data[[1]]$tooltip)))
+  expect_false(plot$coordinates$default)
+  expect_equal(plot$coordinates$ratio, 1)
+})
+
+test_that("geom_calendar_interactive can disable square rendering", {
+  skip_if_not_installed("ggplot2")
+  skip_if_not_installed("ggiraph")
+
+  df <- data.frame(
+    date = as.Date(c("2025-01-01", "2025-01-03")),
+    value = c(1, 3)
+  )
+
+  plot <- ggplot2::ggplot(df, ggplot2::aes(date = date, value = value)) +
+    geom_calendar_interactive(square = FALSE)
+
+  expect_true(plot$coordinates$default)
+  expect_null(plot$coordinates$ratio)
 })

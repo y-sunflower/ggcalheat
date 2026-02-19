@@ -6,6 +6,16 @@ first_non_missing <- function(x) {
   x[[idx[[1]]]]
 }
 
+validate_square_flag <- function(square, arg = "square") {
+  if (!is.logical(square) || length(square) != 1 || is.na(square)) {
+    rlang::abort(
+      paste0("`", arg, "` must be either TRUE or FALSE.")
+    )
+  }
+
+  square
+}
+
 compute_calendar_panel_data <- function(
   data,
   week_start = "sunday",
@@ -123,13 +133,16 @@ StatCalendarInteractive <- ggplot2::ggproto(
 #' @param na_value Value assigned to dates that are missing from input data.
 #' @param cell_width Width of each day tile.
 #' @param cell_height Height of each day tile.
+#' @param square If `TRUE`, adds [ggplot2::coord_fixed()] (`ratio = 1`) so day
+#'   cells render as squares by default.
 #' @param color Tile border color.
 #' @param linewidth Tile border line width.
 #' @param na.rm Passed to [ggplot2::geom_tile()] to control NA handling.
 #' @param show.legend Should this layer be included in legends?
 #' @param inherit.aes If `FALSE`, overrides global aesthetics.
 #'
-#' @return A ggplot2 layer.
+#' @return A ggplot2 component. By default this includes the calendar layer plus
+#'   [ggplot2::coord_fixed()] so day tiles stay square.
 #' @export
 #'
 #' @examples
@@ -167,13 +180,16 @@ geom_calendar <- function(
   na_value = 0,
   cell_width = 0.95,
   cell_height = 0.95,
+  square = TRUE,
   color = NA,
   linewidth = 0,
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
 ) {
-  ggplot2::layer(
+  square <- validate_square_flag(square, arg = "square")
+
+  layer <- ggplot2::layer(
     data = data,
     mapping = mapping,
     stat = StatCalendar,
@@ -194,4 +210,10 @@ geom_calendar <- function(
       ...
     )
   )
+
+  if (square) {
+    return(list(layer, ggplot2::coord_fixed(ratio = 1)))
+  }
+
+  layer
 }
