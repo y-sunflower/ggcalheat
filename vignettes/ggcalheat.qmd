@@ -28,15 +28,7 @@ the calendar layout is computed for you.
 library(ggplot2)
 library(ggcalheat)
 
-set.seed(2026)
-
-calendar_theme <- theme_minimal(base_size = 11) +
-  theme(
-    panel.grid = element_blank(),
-    axis.title = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank()
-  )
+set.seed(0)
 ```
 
 ## Build larger example data
@@ -65,8 +57,6 @@ traffic <- data.frame(
   )
 )
 traffic$year <- format(traffic$date, "%Y")
-
-nrow(traffic)
 ```
 
 ## Basic usage on large daily series
@@ -77,7 +67,7 @@ ggplot(traffic, aes(date = date, value = value)) +
   facet_wrap(~year, ncol = 1, scales = "free_x") +
   scale_fill_gradient(low = "grey95", high = "#2C7FB8", name = "Traffic") +
   labs(title = "Daily traffic (2022-2025)") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ## Signed data with a diverging scale
@@ -106,7 +96,7 @@ ggplot(anomaly, aes(date = date, value = value)) +
     name = "Anomaly"
   ) +
   labs(title = "Signed daily anomalies") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ## Change week start to Monday
@@ -124,7 +114,7 @@ ggplot(q1_2025, aes(date = date, value = value)) +
   geom_calendar(week_start = "monday") +
   scale_fill_gradient(low = "grey95", high = "#1B9E77", name = "Traffic") +
   labs(title = "Q1 2025, Monday-first calendar") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ## Sparse input + explicit date window
@@ -149,7 +139,7 @@ ggplot(sparse, aes(date = date, value = value)) +
   ) +
   scale_fill_gradient(low = "grey95", high = "#D95F02", name = "Events") +
   labs(title = "Sparse data completed over an explicit window") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ## Duplicate dates are summed automatically
@@ -171,7 +161,7 @@ ggplot(events, aes(date = date, value = value)) +
   geom_calendar() +
   scale_fill_gradient(low = "grey95", high = "#7570B3", name = "Sum/day") +
   labs(title = "Event-level rows aggregated per day") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ## Style tile size and borders
@@ -190,7 +180,7 @@ ggplot(yr2024, aes(date = date, value = value)) +
   ) +
   scale_fill_gradient(low = "#F7FCF5", high = "#238B45", name = "Traffic") +
   labs(title = "2024 with tighter tiles and white borders") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ## Facet by group
@@ -217,7 +207,7 @@ ggplot(team_data, aes(date = date, value = value)) +
   facet_wrap(~team, ncol = 1) +
   scale_fill_gradient(low = "grey95", high = "#66A61E", name = "Value") +
   labs(title = "Team calendars") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ## Interactive calendar heatmaps with ggiraph
@@ -240,7 +230,7 @@ p_interactive <- ggplot(interactive_df, aes(date = date, value = value)) +
   ) +
   scale_fill_gradient(low = "grey95", high = "#2C7FB8", name = "Traffic") +
   labs(title = "Interactive 2025 calendar") +
-  calendar_theme
+  theme_minimal()
 
 girafe(ggobj = p_interactive)
 ```
