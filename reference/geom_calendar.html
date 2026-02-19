@@ -61,6 +61,7 @@ is handled internally.</p>
 <span>  na_value <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  cell_width <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  cell_height <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  square <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  color <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  linewidth <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -111,6 +112,11 @@ include <code>date</code> and <code>value</code>.</p></dd>
 <dd><p>Height of each day tile.</p></dd>
 
 
+<dt id="arg-square">square<a class="anchor" aria-label="anchor" href="#arg-square"></a></dt>
+<dd><p>If <code>TRUE</code>, adds <code><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">ggplot2::coord_fixed()</a></code> (<code>ratio = 1</code>) so day
+cells render as squares by default.</p></dd>
+
+
 <dt id="arg-color">color<a class="anchor" aria-label="anchor" href="#arg-color"></a></dt>
 <dd><p>Tile border color.</p></dd>
 
@@ -133,7 +139,8 @@ include <code>date</code> and <code>value</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A ggplot2 layer.</p>
+    <p>A ggplot2 component. By default this includes the calendar layer plus
+<code><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">ggplot2::coord_fixed()</a></code> so day tiles stay square.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

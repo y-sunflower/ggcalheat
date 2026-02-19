@@ -17,6 +17,7 @@ geom_calendar(
   na_value = 0,
   cell_width = 0.95,
   cell_height = 0.95,
+  square = TRUE,
   color = NA,
   linewidth = 0,
   na.rm = FALSE,
@@ -66,6 +67,12 @@ geom_calendar(
 
   Height of each day tile.
 
+- square:
+
+  If `TRUE`, adds
+  [`ggplot2::coord_fixed()`](https://ggplot2.tidyverse.org/reference/coord_fixed.html)
+  (`ratio = 1`) so day cells render as squares by default.
+
 - color:
 
   Tile border color.
@@ -90,7 +97,9 @@ geom_calendar(
 
 ## Value
 
-A ggplot2 layer.
+A ggplot2 component. By default this includes the calendar layer plus
+[`ggplot2::coord_fixed()`](https://ggplot2.tidyverse.org/reference/coord_fixed.html)
+so day tiles stay square.
 
 ## Details
 

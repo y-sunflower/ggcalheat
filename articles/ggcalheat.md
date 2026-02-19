@@ -12,15 +12,7 @@ you.
 library(ggplot2)
 library(ggcalheat)
 
-set.seed(2026)
-
-calendar_theme <- theme_minimal(base_size = 11) +
-  theme(
-    panel.grid = element_blank(),
-    axis.title = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank()
-  )
+set.seed(0)
 ```
 
 ## 2 Build larger example data
@@ -49,9 +41,6 @@ traffic <- data.frame(
   )
 )
 traffic$year <- format(traffic$date, "%Y")
-
-nrow(traffic)
-#> [1] 1461
 ```
 
 ## 3 Basic usage on large daily series
@@ -59,10 +48,10 @@ nrow(traffic)
 ``` r
 ggplot(traffic, aes(date = date, value = value)) +
   geom_calendar() +
-  facet_wrap(~year, ncol = 1, scales = "free_x") +
+  facet_wrap(~year, ncol = 1) +
   scale_fill_gradient(low = "grey95", high = "#2C7FB8", name = "Traffic") +
   labs(title = "Daily traffic (2022-2025)") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-3-1.png)
@@ -93,7 +82,7 @@ ggplot(anomaly, aes(date = date, value = value)) +
     name = "Anomaly"
   ) +
   labs(title = "Signed daily anomalies") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-4-1.png)
@@ -114,7 +103,7 @@ ggplot(q1_2025, aes(date = date, value = value)) +
   geom_calendar(week_start = "monday") +
   scale_fill_gradient(low = "grey95", high = "#1B9E77", name = "Traffic") +
   labs(title = "Q1 2025, Monday-first calendar") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-5-1.png)
@@ -141,7 +130,7 @@ ggplot(sparse, aes(date = date, value = value)) +
   ) +
   scale_fill_gradient(low = "grey95", high = "#D95F02", name = "Events") +
   labs(title = "Sparse data completed over an explicit window") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-6-1.png)
@@ -166,7 +155,7 @@ ggplot(events, aes(date = date, value = value)) +
   geom_calendar() +
   scale_fill_gradient(low = "grey95", high = "#7570B3", name = "Sum/day") +
   labs(title = "Event-level rows aggregated per day") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-7-1.png)
@@ -188,7 +177,7 @@ ggplot(yr2024, aes(date = date, value = value)) +
   ) +
   scale_fill_gradient(low = "#F7FCF5", high = "#238B45", name = "Traffic") +
   labs(title = "2024 with tighter tiles and white borders") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-8-1.png)
@@ -217,7 +206,7 @@ ggplot(team_data, aes(date = date, value = value)) +
   facet_wrap(~team, ncol = 1) +
   scale_fill_gradient(low = "grey95", high = "#66A61E", name = "Value") +
   labs(title = "Team calendars") +
-  calendar_theme
+  theme_minimal()
 ```
 
 ![](ggcalheat_files/figure-html/unnamed-chunk-9-1.png)
@@ -243,7 +232,7 @@ p_interactive <- ggplot(interactive_df, aes(date = date, value = value)) +
   ) +
   scale_fill_gradient(low = "grey95", high = "#2C7FB8", name = "Traffic") +
   labs(title = "Interactive 2025 calendar") +
-  calendar_theme
+  theme_minimal()
 
 girafe(ggobj = p_interactive)
 ```
