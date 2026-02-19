@@ -64,7 +64,7 @@ traffic$year <- format(traffic$date, "%Y")
 ```{r}
 ggplot(traffic, aes(date = date, value = value)) +
   geom_calendar() +
-  facet_wrap(~year, ncol = 1, scales = "free_x") +
+  facet_wrap(~year, ncol = 1) +
   scale_fill_gradient(low = "grey95", high = "#2C7FB8", name = "Traffic") +
   labs(title = "Daily traffic (2022-2025)") +
   theme_minimal()
