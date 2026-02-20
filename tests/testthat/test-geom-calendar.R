@@ -143,6 +143,62 @@ test_that("geom_calendar can disable square rendering", {
   expect_null(plot$coordinates$ratio)
 })
 
+test_that("geom_calendar adds weekday and month labels by default", {
+  skip_if_not_installed("ggplot2")
+
+  df <- data.frame(
+    date = seq.Date(as.Date("2025-01-01"), as.Date("2025-02-28"), by = "day"),
+    value = seq_len(59)
+  )
+
+  plot <- ggplot2::ggplot(df, ggplot2::aes(date = date, value = value)) +
+    geom_calendar()
+
+  x_scale <- plot$scales$get_scales("x")
+  y_scale <- plot$scales$get_scales("y")
+
+  expect_null(x_scale$breaks)
+  expect_equal(y_scale$breaks, 7:1)
+  expect_equal(
+    y_scale$labels,
+    c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+  )
+
+  built <- ggplot2::ggplot_build(plot)
+  month_data <- built$data[[2]]
+  expect_true(all(month_data$label %in% c("Jan", "Feb")))
+  expect_true(all(month_data$y == 0.35))
+})
+
+test_that("geom_calendar label customization is respected", {
+  skip_if_not_installed("ggplot2")
+
+  df <- data.frame(
+    date = seq.Date(as.Date("2025-01-01"), as.Date("2025-01-31"), by = "day"),
+    value = seq_len(31)
+  )
+
+  custom_day_labels <- c("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su")
+
+  plot <- ggplot2::ggplot(df, ggplot2::aes(date = date, value = value)) +
+    geom_calendar(
+      week_start = "monday",
+      day_labels = custom_day_labels,
+      month_labels = function(x) toupper(format(x, "%b")),
+      month_label_y = 0.2,
+      month_label_color = "red"
+    )
+
+  y_scale <- plot$scales$get_scales("y")
+  expect_equal(y_scale$labels, custom_day_labels)
+
+  built <- ggplot2::ggplot_build(plot)
+  month_data <- built$data[[2]]
+  expect_equal(unique(month_data$label), "JAN")
+  expect_true(all(month_data$y == 0.2))
+  expect_true(all(month_data$colour == "red"))
+})
+
 test_that("geom_calendar_interactive works with ggiraph", {
   skip_if_not_installed("ggplot2")
   skip_if_not_installed("ggiraph")

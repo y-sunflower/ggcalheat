@@ -12,7 +12,9 @@
 #'
 #' @inheritParams geom_calendar
 #' @return A ggplot2 component using ggiraph interactive geometry. By default
-#'   this includes [ggplot2::coord_fixed()] so day tiles stay square.
+#'   this includes calendar tiles, hidden x ticks, weekday labels on y, month
+#'   labels below the heatmap, and [ggplot2::coord_fixed()] so day tiles stay
+#'   square.
 #' @export
 #'
 #' @examplesIf requireNamespace("ggiraph", quietly = TRUE)
@@ -45,6 +47,14 @@ geom_calendar_interactive <- function(
   na_value = 0,
   cell_width = 0.95,
   cell_height = 0.95,
+  show_month_labels = TRUE,
+  month_labels = "%b",
+  month_label_y = 0.35,
+  month_label_size = 3.5,
+  month_label_color = "grey20",
+  month_label_vjust = 1,
+  show_day_labels = TRUE,
+  day_labels = NULL,
   square = TRUE,
   color = NA,
   linewidth = 0,
@@ -84,9 +94,29 @@ geom_calendar_interactive <- function(
     )
   )
 
+  axis_components <- build_calendar_axis_components(
+    data = data,
+    mapping = mapping,
+    week_start = week_start,
+    start_date = start_date,
+    end_date = end_date,
+    na_value = na_value,
+    show_month_labels = show_month_labels,
+    month_labels = month_labels,
+    month_label_y = month_label_y,
+    month_label_size = month_label_size,
+    month_label_color = month_label_color,
+    month_label_vjust = month_label_vjust,
+    show_day_labels = show_day_labels,
+    day_labels = day_labels,
+    inherit.aes = inherit.aes
+  )
+
+  components <- c(list(layer), axis_components)
+
   if (square) {
-    return(list(layer, ggplot2::coord_fixed(ratio = 1)))
+    return(c(components, list(ggplot2::coord_fixed(ratio = 1))))
   }
 
-  layer
+  components
 }
