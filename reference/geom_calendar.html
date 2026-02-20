@@ -61,6 +61,14 @@ is handled internally.</p>
 <span>  na_value <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  cell_width <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  cell_height <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  show_month_labels <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  month_labels <span class="op">=</span> <span class="st">"%b"</span>,</span>
+<span>  month_label_y <span class="op">=</span> <span class="fl">0.35</span>,</span>
+<span>  month_label_size <span class="op">=</span> <span class="fl">3.5</span>,</span>
+<span>  month_label_color <span class="op">=</span> <span class="st">"grey20"</span>,</span>
+<span>  month_label_vjust <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  show_day_labels <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  day_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  square <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  color <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  linewidth <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -112,6 +120,42 @@ include <code>date</code> and <code>value</code>.</p></dd>
 <dd><p>Height of each day tile.</p></dd>
 
 
+<dt id="arg-show-month-labels">show_month_labels<a class="anchor" aria-label="anchor" href="#arg-show-month-labels"></a></dt>
+<dd><p>If <code>TRUE</code>, draws month labels below the calendar
+using abbreviated names by default.</p></dd>
+
+
+<dt id="arg-month-labels">month_labels<a class="anchor" aria-label="anchor" href="#arg-month-labels"></a></dt>
+<dd><p>Month label formatter. Use a single date format string
+(default <code>"%b"</code>) or a function that takes month-start dates and returns
+labels.</p></dd>
+
+
+<dt id="arg-month-label-y">month_label_y<a class="anchor" aria-label="anchor" href="#arg-month-label-y"></a></dt>
+<dd><p>Vertical position for month labels (in calendar y units).</p></dd>
+
+
+<dt id="arg-month-label-size">month_label_size<a class="anchor" aria-label="anchor" href="#arg-month-label-size"></a></dt>
+<dd><p>Text size for month labels.</p></dd>
+
+
+<dt id="arg-month-label-color">month_label_color<a class="anchor" aria-label="anchor" href="#arg-month-label-color"></a></dt>
+<dd><p>Text color for month labels.</p></dd>
+
+
+<dt id="arg-month-label-vjust">month_label_vjust<a class="anchor" aria-label="anchor" href="#arg-month-label-vjust"></a></dt>
+<dd><p>Vertical justification for month labels.</p></dd>
+
+
+<dt id="arg-show-day-labels">show_day_labels<a class="anchor" aria-label="anchor" href="#arg-show-day-labels"></a></dt>
+<dd><p>If <code>TRUE</code>, shows weekday labels on the y-axis.</p></dd>
+
+
+<dt id="arg-day-labels">day_labels<a class="anchor" aria-label="anchor" href="#arg-day-labels"></a></dt>
+<dd><p>Optional custom weekday labels (character vector of length
+7, top to bottom).</p></dd>
+
+
 <dt id="arg-square">square<a class="anchor" aria-label="anchor" href="#arg-square"></a></dt>
 <dd><p>If <code>TRUE</code>, adds <code><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">ggplot2::coord_fixed()</a></code> (<code>ratio = 1</code>) so day
 cells render as squares by default.</p></dd>
@@ -139,7 +183,8 @@ cells render as squares by default.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A ggplot2 component. By default this includes the calendar layer plus
+    <p>A ggplot2 component. By default this includes calendar tiles, hidden
+x ticks, weekday labels on y, month labels below the heatmap, and
 <code><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">ggplot2::coord_fixed()</a></code> so day tiles stay square.</p>
     </div>
     <div class="section level2">

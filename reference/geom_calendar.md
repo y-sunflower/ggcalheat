@@ -17,6 +17,14 @@ geom_calendar(
   na_value = 0,
   cell_width = 0.95,
   cell_height = 0.95,
+  show_month_labels = TRUE,
+  month_labels = "%b",
+  month_label_y = 0.35,
+  month_label_size = 3.5,
+  month_label_color = "grey20",
+  month_label_vjust = 1,
+  show_day_labels = TRUE,
+  day_labels = NULL,
   square = TRUE,
   color = NA,
   linewidth = 0,
@@ -67,6 +75,41 @@ geom_calendar(
 
   Height of each day tile.
 
+- show_month_labels:
+
+  If `TRUE`, draws month labels below the calendar using abbreviated
+  names by default.
+
+- month_labels:
+
+  Month label formatter. Use a single date format string (default
+  `"%b"`) or a function that takes month-start dates and returns labels.
+
+- month_label_y:
+
+  Vertical position for month labels (in calendar y units).
+
+- month_label_size:
+
+  Text size for month labels.
+
+- month_label_color:
+
+  Text color for month labels.
+
+- month_label_vjust:
+
+  Vertical justification for month labels.
+
+- show_day_labels:
+
+  If `TRUE`, shows weekday labels on the y-axis.
+
+- day_labels:
+
+  Optional custom weekday labels (character vector of length 7, top to
+  bottom).
+
 - square:
 
   If `TRUE`, adds
@@ -97,7 +140,8 @@ geom_calendar(
 
 ## Value
 
-A ggplot2 component. By default this includes the calendar layer plus
+A ggplot2 component. By default this includes calendar tiles, hidden x
+ticks, weekday labels on y, month labels below the heatmap, and
 [`ggplot2::coord_fixed()`](https://ggplot2.tidyverse.org/reference/coord_fixed.html)
 so day tiles stay square.
 

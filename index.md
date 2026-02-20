@@ -35,6 +35,21 @@ ggplot(df, aes(date = date, value = value)) +
 
   
 
+- Axis labels are calendar-aware by default (month abbreviations below
+  the grid, weekday abbreviations on y). They are easy to customize:
+
+``` r
+ggplot(df, aes(date = date, value = value)) +
+  geom_calendar(
+    week_start = "monday",
+    day_labels = c("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"),
+    month_labels = "%b"
+  ) +
+  scale_fill_gradient(low = "grey95", high = "#2C7FB8")
+```
+
+  
+
 - Signed values are supported directly with standard continuous scales:
 
 ``` r
